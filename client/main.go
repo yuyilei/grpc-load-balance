@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "BrokerDemo/proto"
+	pb "proto"
 	"fmt"
 	"google.golang.org/grpc"
 	"io"
