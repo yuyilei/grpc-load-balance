@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "proto"
+	// pb "client"
 	"fmt"
 	"google.golang.org/grpc"
 	"io"
@@ -55,7 +55,7 @@ func costTime(s string, e string) string {
 func SayHello(n int, id int32) {
 
 	clientConn, err := grpc.Dial(fmt.Sprintf("%v:%v", brokerHost, brokerPort), grpc.WithInsecure())
-	helloClient := pb.NewBrokerClient(clientConn)
+	helloClient := NewBrokerClient(clientConn)
 	stream, err := helloClient.SayHello(context.Background())
 	if err != nil {
 		log.Fatalf("cleint could not sayHello: %v", err)
@@ -79,7 +79,7 @@ func SayHello(n int, id int32) {
 		}
 	}()
 	for i := 0; i < n; i++ {
-		if err := stream.Send(&pb.HelloRequest{ClientId: id}); err != nil {
+		if err := stream.Send(&HelloRequest{ClientId: id}); err != nil {
 			if err == io.EOF {
 				break
 			}
