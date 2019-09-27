@@ -4,7 +4,11 @@ WORKDIR $GOPATH/BrokerDemo
 
 ADD . $GOPATH/BrokerDemo
 
-CMD ["go", "get", "google.golang.org/grpc"]
+RUN go get google.golang.org/grpc 
+
+# CMD ["ls", "$GOPATH/src/google.golang.org"]  
+
+# RUN pwd
 
 CMD ["cd", "client"]
 
