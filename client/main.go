@@ -9,10 +9,12 @@ import (
 	"context"
 	"sync"
 	"time"
+	"os"
 )
 
 var (
-	brokerPort = "50051"
+	brokerPort = os.Getenv("ECHO_SERVICE_PORT")
+	brokerHost = os.Getenv("ECHO_SERVICE_HOST")
 )
 
 type counter struct {
@@ -52,7 +54,7 @@ func costTime(s string, e string) string {
 
 func SayHello(n int, id int32) {
 
-	clientConn, err := grpc.Dial(fmt.Sprintf("127.0.0.1:%v", brokerPort), grpc.WithInsecure())
+	clientConn, err := grpc.Dial(fmt.Sprintf("%v:%v", brokerHost, brokerPort), grpc.WithInsecure())
 	helloClient := pb.NewBrokerClient(clientConn)
 	stream, err := helloClient.SayHello(context.Background())
 	if err != nil {
