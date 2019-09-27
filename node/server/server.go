@@ -8,8 +8,8 @@ import (
 	"net"
 	"sync"
 	"time"
-
-	pb "BrokerDemo/proto"
+	"os"
+	pb "BrokerDemo/node/proto"
 )
 
 type server struct{
@@ -28,12 +28,13 @@ func currentTime() string {
 func (s *server) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloReply, error) {
 	// s.mutex.Lock()
 	// defer s.mutex.Unlock()
+	pid := os.Getpid()
 	startTime := currentTime()
 	log.Printf("Received request from client, nodeName= %v, currentTime= %v", s.name, startTime)
 	// time.Sleep(100 * time.Millisecond)
 	endTime := currentTime()
 	log.Printf("Finished some work, nodeId= %v, currentTime= %v", s.nodeId, endTime)
-	return &pb.HelloReply{Message: fmt.Sprintf("node say Hello to client, nodeName= %v, startTime= %v, endTime= %v", s.name, startTime, endTime), NodeName: s.name}, nil
+	return &pb.HelloReply{Message: fmt.Sprintf("node say Hello to client, nodeName= %v, startTime= %v, endTime= %v", pid, startTime, endTime), NodeName: s.name}, nil
 }
 /*
 func (s *server) SayHi(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {

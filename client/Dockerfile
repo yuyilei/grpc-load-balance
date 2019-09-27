@@ -11,9 +11,7 @@ COPY proto/* $GOPATH/src/BrokerDemo/client/proto/
 
 RUN go get google.golang.org/grpc 
 
-# CMD ["ls", "$GOPATH/src/google.golang.org"]  
-
-# RUN pwd
+EXPOSE 8080
 
 CMD ["cd", "client"]
 
