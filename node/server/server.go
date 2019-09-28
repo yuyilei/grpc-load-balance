@@ -6,6 +6,7 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"strconv"
 	"sync"
 	"time"
 	"os"
@@ -34,7 +35,7 @@ func (s *server) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloR
 	// time.Sleep(100 * time.Millisecond)
 	endTime := currentTime()
 	log.Printf("Finished some work, nodeId= %v, currentTime= %v", s.nodeId, endTime)
-	return &pb.HelloReply{Message: fmt.Sprintf("node say Hello to client, nodeName= %v, startTime= %v, endTime= %v", pid, startTime, endTime), NodeName: s.name}, nil
+	return &pb.HelloReply{Message: fmt.Sprintf("node say Hello to client, nodeName= %v, startTime= %v, endTime= %v", pid, startTime, endTime), NodeName: strconv.Itoa(pid)}, nil
 }
 /*
 func (s *server) SayHi(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
