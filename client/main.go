@@ -34,6 +34,13 @@ func (c counter) Add(key string) {
 	c.count[key]++
 }
 
+
+func init()  {
+	c = new(counter)
+	c.count = make(map[string]int32)
+	wg.Add(clientNum)
+}
+
 func main() {
 	// SayHello(10, 10)
 	startTime := currentTime()
