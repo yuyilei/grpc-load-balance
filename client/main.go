@@ -7,15 +7,16 @@ import (
 	"io"
 	"log"
 	"context"
+	"strconv"
 	"sync"
 	"time"
 	"os"
 )
 
 var (
-	brokerPort = os.Getenv("ECHO_SERVICE_PORT")
-	brokerHost = os.Getenv("ECHO_SERVICE_HOST")
-	clientNum = 800
+	brokerPort   = os.Getenv("ECHO_SERVICE_PORT")
+	brokerHost   = os.Getenv("ECHO_SERVICE_HOST")
+	clientNum, _ = strconv.Atoi(os.Getenv("COUNT"))
 	c *counter
 	wg sync.WaitGroup
 )
