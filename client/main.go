@@ -15,6 +15,9 @@ import (
 var (
 	brokerPort = os.Getenv("ECHO_SERVICE_PORT")
 	brokerHost = os.Getenv("ECHO_SERVICE_HOST")
+	clientNum = 800
+	c *counter
+	wg sync.WaitGroup
 )
 
 type counter struct {
@@ -32,7 +35,19 @@ func (c counter) Add(key string) {
 }
 
 func main() {
-	SayHello(10, 10)
+	// SayHello(10, 10)
+	startTime := currentTime()
+	var i int32
+	for ; i < int32(clientNum); i++ {
+		go func() {
+			SayHi(i)
+		}()
+	}
+	wg.Wait()
+	endTime := currentTime()
+	log.Printf("StartTime= %v, EndTime= %v CostTime= %v", startTime, endTime, costTime(startTime, endTime))
+	log.Printf("NodeCount: %v\n", c.count)
+
 }
 
 func currentTime() string {
@@ -100,3 +115,20 @@ func SayHello(n int, id int32) {
 }
 
 
+func SayHi(clientId int32) {
+	clientConn, err := grpc.Dial(fmt.Sprintf("%v:%v", brokerHost, brokerPort), grpc.WithInsecure())
+	defer wg.Done()
+	if err != nil {
+		log.Printf("cleint could not sayHi: %v", err)
+		return
+	}
+	hiClient := pb.NewGreeterClient(clientConn)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	r, err := hiClient.SayHello(ctx, &pb.HelloRequest{ClientId: clientId})
+	if err != nil {
+		log.Printf("could not greet: %v", err)
+	}
+	log.Printf("Greeting: %s", r.GetMessage())
+	c.Add(r.GetNodeName())
+}
