@@ -1,22 +1,25 @@
 package main
 
 import (
-	 pb "BrokerDemo/client/proto"
+	pb "BrokerDemo/client/proto"
+	"context"
 	"fmt"
 	"google.golang.org/grpc"
 	"io"
 	"log"
-	"context"
-	"strconv"
+	// "os"
+	// "strconv"
 	"sync"
 	"time"
-	"os"
 )
 
 var (
-	brokerPort   = os.Getenv("ECHO_SERVICE_PORT")
-	brokerHost   = os.Getenv("ECHO_SERVICE_HOST")
-	clientNum, _ = strconv.Atoi(os.Getenv("COUNT"))
+	// brokerPort   = os.Getenv("ECHO_SERVICE_PORT")
+	// brokerHost   = os.Getenv("ECHO_SERVICE_HOST")
+	// clientNum, _ = strconv.Atoi(os.Getenv("COUNT"))
+	brokerHost = "127.0.0.1"
+	brokerPort = "50051"
+	clientNum = 800
 	c *counter
 	wg sync.WaitGroup
 )
