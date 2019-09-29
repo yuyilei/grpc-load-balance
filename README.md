@@ -12,5 +12,5 @@ and use the random load balance policy. And I have a gRPC client that will send 
 
 As a result, the gRPC cluster can handle about 800 concurrent gRPC requests at most. 
 
-![](https://github.com/yuyilei/grpc-load-balance/pictrue/ng.jpg) 
+![](https://github.com/yuyilei/grpc-load-balance/blob/master/pictrue/ng.jpg?raw=true) 
 
