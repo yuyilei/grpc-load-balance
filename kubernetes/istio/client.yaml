@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: echo-client
+  name: echo-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: echo-client
+  template:
+    metadata:
+      labels:
+        run: echo-client
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+        - name: echo-client
+          image: yuyileiyuyilei/grpclient:v1.1
+          imagePullPolicy: Always
+          env:
+            - name: ECHO_SERVICE_HOST
+              value: echo-server
+            - name: ECHO_SERVICE_PORT
+              value: "8080"
+            - name: COUNT
+              value: "600"

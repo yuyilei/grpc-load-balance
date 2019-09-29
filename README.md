@@ -30,8 +30,9 @@ And to make sidecars can be automatically added to applicable Kubernetes pods, I
 
 ### Deployment 
 
+[server con]()
+
 I deploy the gRPC server with configuration that declare there are 20 gRPC server instances(replica) and each pod have a sidecar proxy. 
 
 Then I make the same gRPC client to test the cluster, and the result is it can handle **500** gRPC requests concurrently. 
-
  
